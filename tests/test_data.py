@@ -1,6 +1,6 @@
 import json
 
-from ticket_triage.data import format_example, format_prompt
+from ticket_triage.data import RESPONSE_TAG, format_example, format_prompt
 
 
 def test_format_example_contains_ticket_and_label():
@@ -20,7 +20,7 @@ def test_inference_prompt_is_prefix_of_training_example():
 
 def test_completion_is_valid_json():
     out = format_example("App keeps crashing", "app_issue", "medium")
-    completion = out.split("<response> ", 1)[1]
+    completion = out.split(RESPONSE_TAG, 1)[1]
     parsed = json.loads(completion)
     assert parsed == {"category": "app_issue", "priority": "medium"}
 

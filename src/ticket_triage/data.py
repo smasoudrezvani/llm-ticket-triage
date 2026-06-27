@@ -4,7 +4,7 @@ from pathlib import Path
 from ticket_triage.schema import TicketClassification
 
 INSTRUCTION = "Classify this support ticket by category and priority."
-
+RESPONSE_TAG = "<response> "
 
 def format_example(text: str, category: str, priority: str) -> str:
     """Render one labelled row into the training prompt format."""
@@ -15,16 +15,16 @@ def format_example(text: str, category: str, priority: str) -> str:
     return (
         f"<instruction> {INSTRUCTION}\n"
         f"Ticket: {text}\n"
-        f"<response> {completion}"
+        f"{RESPONSE_TAG}{completion}"
     )
 
 
 def format_prompt(text: str) -> str:
-    """Render an unlabelled ticket for inference (everything up to <response>)."""
+    """Render an unlabelled ticket for inference (everything up to the response tag)."""
     return (
         f"<instruction> {INSTRUCTION}\n"
         f"Ticket: {text}\n"
-        f"<response> "
+        f"{RESPONSE_TAG}"
     )
 
 
